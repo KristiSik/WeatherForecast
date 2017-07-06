@@ -1,5 +1,50 @@
 ﻿@using System.Globalization
+@using WeatherForecast.Models
 
+@helper NowHighlighting(int time) { 
+    int now = DateTime.Now.Hour, timenow;
+    if (now >= 3 && now < 9)
+    {
+        timenow = 1;
+    }
+    else
+    if (now >= 9 && now < 15)
+    {
+        timenow = 2;
+    }
+    else
+    if (now >= 15 && now < 21)
+    {
+        timenow = 3;
+    }
+    else
+    {
+        timenow = 4;
+    }
+    if (time == timenow)
+    {
+@:now
+    }
+}
+
+@helper TemperatureDuringDay(Temp temp) {
+    Dictionary<string, double> times = new Dictionary<string, double>()
+    {
+        { "Morning", temp.morn},
+        { "Day", temp.day},
+        { "Evening", temp.eve },
+        { "Night", temp.night }
+    };
+    int i = 0;
+    foreach (var time in times)
+    {
+        i++;
+    <div class="time_of_day col-md-2 @NowHighlighting(i)">
+        <div class="time_of_day_title">@time.Key</div>
+        <p class="temperature">@Temperature(time.Value) °C</p>
+    </div>
+}
+}
 
 @helper Temperature(double temp) {
     if (temp > 0)
@@ -85,22 +130,6 @@
                 </table>
             </div>
         </div>
-        
-        <div class="time_of_day col-md-2">
-            <div class="time_of_day_title">Morning</div>
-            <p class="temperature">@Temperature(day.temp.morn) °C</p>
-        </div>
-        <div class="time_of_day col-md-2">
-            <div class="time_of_day_title">Day</div>
-            <p class="temperature">@Temperature(@day.temp.day) °C</p>
-        </div>
-        <div class="time_of_day col-md-2">
-            <div class="time_of_day_title">Evening</div>
-            <p class="temperature">@Temperature(@day.temp.eve) °C</p>
-        </div>
-        <div class="time_of_day col-md-2">
-            <div class="time_of_day_title">Night</div>
-            <p class="temperature">@Temperature(@day.temp.night) °C</p>
-        </div>
+        @TemperatureDuringDay(day.temp)
     </div>
 }

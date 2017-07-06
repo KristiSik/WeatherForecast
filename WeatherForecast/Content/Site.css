@@ -172,11 +172,19 @@ p:last-child {
 }
 
 .now {
-    background-color:#ededed;
+    background-color: #ededed;
 }
 
 .now .temperature {
     font-weight: bold;
+}
+
+.day ~ .day .now {
+    background-color: #ffffff;
+}
+
+.day ~ .day .now .temperature {
+    font-weight: normal;
 }
 
 /* --end-- */
