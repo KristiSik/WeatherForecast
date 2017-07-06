@@ -1,0 +1,106 @@
+﻿@using System.Globalization
+
+
+@helper Temperature(double temp) {
+    if (temp > 0)
+    {
+        @:+@Math.Round(temp)
+    }
+    else
+    {
+        @:-@Math.Round(temp)
+    }
+}
+
+@helper WindDirection(int deg) {
+    string direction;
+    if (deg >= 348.75 && deg < 33.75)
+    {
+        direction = "n";
+    }
+    else if (deg >= 33.75 && deg < 78.75)
+    {
+        direction = "ne";
+    }
+    else if (deg >= 78.75 && deg < 123.75)
+    {
+        direction = "e";
+    }
+    else if (deg >= 123.75 && deg < 168.75)
+    {
+        direction = "se";
+    }
+    else if (deg >= 168.75 && deg < 213.75)
+    {
+        direction = "s";
+    }
+    else if (deg >= 213.75 && deg < 258.75)
+    {
+        direction = "sw";
+    }
+    else if (deg >= 258.75 && deg < 303.75)
+    {
+        direction = "w";
+    }
+    else
+    {
+        direction = "nw";
+    };
+    <img class="wind_direction_img" src="@VirtualPathUtility.ToAbsolute("~/Images/" + direction + ".png")" />
+}
+
+@helper Day(WeatherForecast.Models.List day)
+{
+    DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+    date = date.AddSeconds(day.dt).ToLocalTime();
+    <div class="row day panel panel-default">
+        <div class="main col-md-1">
+            <p class="day_of_week">@date.DayOfWeek</p>
+            <p class="day_of_month">@date.Day</p>
+            <p class="month">@date.ToString("MMMM", new CultureInfo("en-US"))</p>
+        </div>
+        <div class="day_info col-md-3">
+            <div class="col-sm-5">
+                <img src="@VirtualPathUtility.ToAbsolute("~/Images/Icons/" + day.weather.First().icon + ".png")" />
+                <div class="temperature_min_max">@Temperature(day.temp.min) °C ~ @Temperature(day.temp.max) °C</div>
+            </div>
+            <div class="col-sm-7">
+                <table class="table_info">
+                    <tr>
+                        <td style="width: 20px;"><img class="pressure_img" src="@VirtualPathUtility.ToAbsolute("~/Images/pressure.png")" /></td>
+                        <td>@Math.Round(day.pressure) mm</td>
+                    </tr>
+                    <tr>
+                        <td><img class="humidity_img" src="@VirtualPathUtility.ToAbsolute("~/Images/humidity.png")" /></td>
+                        <td>@day.humidity %</td>
+                    </tr>
+                    <tr>
+                        <td><img class="cloudiness_img" src="@VirtualPathUtility.ToAbsolute("~/Images/cloudiness.png")"/></td>
+                        <td>@day.clouds %</td>
+                    </tr>
+                    <tr>
+                        <td>@WindDirection(day.deg)</td>
+                        <td>@Math.Round(day.speed, 1) m/sec</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="time_of_day col-md-2">
+            <div class="time_of_day_title">Morning</div>
+            <p class="temperature">@Temperature(day.temp.morn) °C</p>
+        </div>
+        <div class="time_of_day col-md-2">
+            <div class="time_of_day_title">Day</div>
+            <p class="temperature">@Temperature(@day.temp.day) °C</p>
+        </div>
+        <div class="time_of_day col-md-2">
+            <div class="time_of_day_title">Evening</div>
+            <p class="temperature">@Temperature(@day.temp.eve) °C</p>
+        </div>
+        <div class="time_of_day col-md-2">
+            <div class="time_of_day_title">Night</div>
+            <p class="temperature">@Temperature(@day.temp.night) °C</p>
+        </div>
+    </div>
+}

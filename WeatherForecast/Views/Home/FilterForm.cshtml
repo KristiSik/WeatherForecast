@@ -1,0 +1,23 @@
+﻿@model WeatherForecast.Models.Forecast
+@{ 
+    Dictionary<string, int> filterButtons = new Dictionary<string, int>()
+    {
+        { "today", 1 },
+        { "3 days", 3 },
+        { "7 days", 7 }
+    };
+
+}
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+        if (ViewBag.Search == true)
+        {
+            @Html.Hidden("Name", new { Value = Model.city.name })
+        }
+    <div class="col-sm-offset-3 col-sm-3 btn-group period" role="group">
+        @foreach (var filterButton in filterButtons)
+        {
+            <button name="Period" type="submit" value="@filterButton.Value" class="btn btn-default" @if (Model.cnt == filterButton.Value) { <text>disabled</text> }>@filterButton.Key</button>
+        }
+    </div>
+}

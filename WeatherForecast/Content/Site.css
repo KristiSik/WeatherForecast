@@ -1,0 +1,205 @@
+﻿body {
+    padding-bottom: 20px;
+    font-family: "Segoe UI";
+}
+
+h3 {
+    margin-left: 15px;
+    font-family: "Segoe UI Light";
+    font-weight: bold;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    width: 86%;
+    margin: 0 auto;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+select,
+textarea {
+    max-width: 280px;
+}
+
+p:last-child {
+    text-align: center;
+}
+
+.period {
+    margin-top: 15px;
+}
+
+.day {
+    margin: 15px;
+    height: 116px;
+}
+
+.day .col-md-2 {
+    padding: 0;
+}
+
+/* Show title just for first day */
+
+.day .time_of_day_title {
+    display: block;
+}
+
+.day ~ .day .col-md-2 {
+    padding: 0;
+    padding-top: 12px;
+}
+
+.day ~ .day .time_of_day_title {
+    display: none;
+}
+
+/* --end-- */
+
+/* Show date */
+
+.main {
+    border-right: 1px solid #dddddd;
+    padding: 5px;
+    height: 100%;
+    background-color: #f3f3f3;
+}
+
+.main p {
+    text-align: center;
+}
+
+.day_of_month {
+    font-size: 24px;
+}
+
+/* --end-- */
+
+/* Show general information */
+
+.day_info {
+    border-right: 1px solid #dddddd;
+    height: 100%;
+    background-color: #f9f9f9;
+}
+
+.temperature_min_max {
+    font-size: 12px;
+    margin-left: 2px;
+}
+
+.day_info .col-sm-7 {
+    padding: 2px 0 0 15px;
+}
+
+.day_info .col-sm-5 {
+    padding: 0;
+}
+
+.day_info > .col-sm-5 img {
+    margin: 10px 0px 2px 3px;
+    height: 55%;
+}
+
+.pressure_img {
+    height: 20px;
+}
+
+.humidity_img {
+    height: 20px;
+}
+
+.cloudiness_img {
+    margin-left: -5px;
+    height: 28px;
+}
+
+.wind_direction_img {
+    margin-left: -5px;
+    height: 28px;
+}
+
+.table_info {
+    font-size: 12px;
+}
+
+.table_info td {
+    padding: 0;
+    height: 20px;
+}
+
+.table_info tr:nth-child(2) {
+    padding: 0;
+    height: 36px;
+}
+
+.table_info tr:nth-child(3) {
+    padding: 0;
+    height: 18px;
+}
+
+/* --end-- */
+
+/* Temperature in each time of day */
+
+.time_of_day {
+    height: 100%;
+    border-right: 1px solid #dddddd;
+}
+
+.time_of_day_title {
+    width: 100%;
+    background-color: #f9f9f9;
+    text-align: center;
+    border-bottom: 1px solid #dddddd;
+}
+
+.temperature {
+    margin-top: 22px;
+    font-family: "Segoe UI Light";
+    text-align: center;
+    font-size: 30px;
+}
+
+.time_of_day:last-child {
+    border: none;
+}
+
+.now {
+    background-color:#ededed;
+}
+
+.now .temperature {
+    font-weight: bold;
+}
+
+/* --end-- */
+
+.form-control:focus {
+    border-color: #cccccc;
+    box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);
+}
+
+.dropdown-menu {
+    margin-top: -3px;
+    width: 174px;
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.dropdown-menu a:hover {
+    cursor: pointer;
+}
+
+.welcome {
+    font-family: 'Segoe UI Light';
+    font-weight: normal;
+    text-align: center;
+}

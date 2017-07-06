@@ -1,0 +1,45 @@
+﻿@using WeatherForecast.Models
+
+@model WeatherForecast.Models.Forecast
+@{ 
+    SearchCity searchCity = new SearchCity();
+    if (ViewBag.Search == true)
+    {
+        searchCity.Name = Model.city.name;
+        searchCity.Period = 1;
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weza — Online Weather Forecast</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-default" style="border-radius:0;">
+        <div class="container-fluid">
+            <div class="col-sm-5 col-sm-offset-4">
+                <div class="navbar-header">
+                    @Html.ActionLink("Weza", "Index", null, new { @class = "navbar-brand" })
+                </div>
+                @{ Html.RenderPartial("SearchForm", searchCity); }
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <footer>
+            <p>&copy; Binary Studio Academy 2017</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/script")
+</body>
+</html>

@@ -1,0 +1,20 @@
+﻿@model WeatherForecast.Models.Forecast
+
+<div class="panel panel-default panel-body">
+@if (ViewBag.Search == true)
+{
+    <div class="row">
+        <h3 class="col-sm-5">Weather in @Html.DisplayFor(Model => Model.city.name)</h3>
+        @Html.Partial("FilterForm")
+    </div>
+    foreach (var day in Model.list)
+    {
+        @DayHelper.Day(day)
+    }
+}
+else
+{
+    <div style='background: url("@VirtualPathUtility.ToAbsolute("~/Images/arrow.png")") center center no-repeat; background-size: contain; width: 200px; margin: 15px auto; height: 150px;'></div>
+    <h3 class="welcome">Welcome to Weza — online weather forecast! Enter the name of your city in the top.</h3>
+}
+</div>
