@@ -211,3 +211,74 @@ p:last-child {
     font-weight: normal;
     text-align: center;
 }
+
+/* Profile styles */
+
+#profile {
+    padding: 6px;
+}
+
+#user_avatar {
+    width: 38px;
+    height: 38px;
+}
+
+.username {
+    font-family: "Segoe UI Light";
+    font-size: 16px;
+    width: 180px;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-top: 13px;
+    cursor: pointer;
+}
+
+#profileMenu {
+    margin-top: 51px;
+}
+
+.login_signup {
+    font-family: "Segoe UI Light";
+    font-size: 16px;
+    padding-top: 13px;
+    color: black;
+}
+
+    .login_signup a:visited, a {
+        color: #428bca;
+    }
+
+    .login_signup a:hover {
+        text-decoration: none;
+    }
+
+/* --end-- */
+
+/* History and Favorite */
+
+.history-table {
+    margin: 0 auto;
+    width: 500px;
+    text-align: center;
+}
+
+    .history-table thead {
+        font-weight: bold;
+    }
+
+.favorite-table {
+    text-align: center;
+    margin: 0 auto;
+    width: 500px;
+}
+
+.favorite-table thead {
+    font-weight: bold;
+}
+
+.history_link:hover {
+    color: #428bca;
+    cursor: pointer;
+}
+
+/* --end-- */

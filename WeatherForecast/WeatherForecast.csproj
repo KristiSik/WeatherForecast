@@ -46,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -142,10 +148,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context\WeatherForecastContext.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Json\JsonOperations.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Main.cs" />
+    <Compile Include="Models\Profile\City.cs" />
+    <Compile Include="Models\Profile\LoginUser.cs" />
+    <Compile Include="Models\Profile\Request.cs" />
+    <Compile Include="Models\Profile\User.cs" />
     <Compile Include="Services\CombinedLogger.cs" />
     <Compile Include="Services\ConsoleLogger.cs" />
     <Compile Include="Services\FileLogger.cs" />
     <Compile Include="Services\ILogger.cs" />
+    <Compile Include="Util\NinjectDependencyResolver.cs" />
+    <Content Include="App_Code\WindDirectionHelper.cshtml" />
+    <Content Include="App_Code\NowHighlightingHelper.cshtml" />
+    <Content Include="App_Code\TemperatureDuringDayHelper.cshtml" />
+    <Content Include="App_Code\TemperatureHelper.cshtml" />
     <None Include="App_Code\DayHelper.cshtml" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -191,12 +211,21 @@
     <Content Include="Images\s.png" />
     <Content Include="Images\se.png" />
     <Content Include="Images\sw.png" />
+    <Content Include="Images\user_avatar.gif" />
     <Content Include="Images\w.png" />
     <Content Include="Log\log.txt" />
     <Content Include="Scripts\script.js" />
     <Content Include="Views\Home\SearchForm.cshtml" />
     <Content Include="Views\Home\FilterForm.cshtml" />
     <Content Include="Views\Home\NotFoundCity.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\Registration.cshtml" />
+    <Content Include="Views\Profile\Login.cshtml" />
+    <Content Include="Views\Profile\ProfileInHead.cshtml" />
+    <Content Include="Views\Profile\History.cshtml" />
+    <Content Include="Views\Profile\Favorites.cshtml" />
+    <Content Include="Views\Home\FavoriteButton.cshtml" />
+    <Content Include="Views\Profile\EditFavorite.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -221,7 +250,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -233,7 +264,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Result.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

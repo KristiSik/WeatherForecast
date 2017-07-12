@@ -3,11 +3,12 @@
 <div class="panel panel-default panel-body">
 @if (ViewBag.Search == true)
 {
+    Html.RenderAction("FavoriteButton", "Home", new { cityName = Model.City.Name });
     <div class="row">
-        <h3 class="col-sm-5">Weather in @Html.DisplayFor(Model => Model.city.name)</h3>
+        <h3 class="col-sm-5">Weather in @Html.DisplayFor(Model => Model.City.Name)</h3>
         @Html.Partial("FilterForm")
     </div>
-    foreach (var day in Model.list)
+    foreach (var day in Model.List)
     {
         @DayHelper.Day(day)
     }

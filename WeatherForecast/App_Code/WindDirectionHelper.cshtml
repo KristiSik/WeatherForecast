@@ -1,0 +1,36 @@
+﻿@helper WindDirection(int deg) {
+    string direction;
+    if (deg >= 348.75 && deg < 33.75)
+    {
+        direction = "n";
+    }
+    else if (deg >= 33.75 && deg < 78.75)
+    {
+        direction = "ne";
+    }
+    else if (deg >= 78.75 && deg < 123.75)
+    {
+        direction = "e";
+    }
+    else if (deg >= 123.75 && deg < 168.75)
+    {
+        direction = "se";
+    }
+    else if (deg >= 168.75 && deg < 213.75)
+    {
+        direction = "s";
+    }
+    else if (deg >= 213.75 && deg < 258.75)
+    {
+        direction = "sw";
+    }
+    else if (deg >= 258.75 && deg < 303.75)
+    {
+        direction = "w";
+    }
+    else
+    {
+        direction = "nw";
+    };
+    <img class="wind_direction_img" src="@VirtualPathUtility.ToAbsolute("~/Images/" + direction + ".png")" />
+}

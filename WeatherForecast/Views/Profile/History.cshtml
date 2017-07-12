@@ -1,0 +1,31 @@
+﻿@model List<WeatherForecast.Models.Profile.Request>
+
+<h2>History</h2>
+<div class="panel panel-default panel-body">
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    @Html.Hidden("Period", 1)
+    <table class="history-table table table-bordered">
+        <thead>
+            <tr>
+                <td>City</td>
+                <td>Time</td>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="history_link">@Html.DisplayFor(modelItem => item.CityName)</div>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                </tr>
+                }
+        </tbody>
+    </table>
+}
+</div>

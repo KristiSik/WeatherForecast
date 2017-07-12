@@ -12,12 +12,12 @@
 {
         if (ViewBag.Search == true)
         {
-            @Html.Hidden("Name", new { Value = Model.city.name })
+            @Html.Hidden("Name", new { Value = Model.City.Name })
         }
     <div class="col-sm-offset-3 col-sm-3 btn-group period" role="group">
         @foreach (var filterButton in filterButtons)
         {
-            <button name="Period" type="submit" value="@filterButton.Value" class="btn btn-default" @if (Model.cnt == filterButton.Value) { <text>disabled</text> }>@filterButton.Key</button>
+            <button name="Period" type="submit" value="@filterButton.Value" class="btn btn-default" @if (Model.Cnt == filterButton.Value) { <text>disabled</text> }>@filterButton.Key</button>
         }
     </div>
 }

@@ -1,0 +1,20 @@
+﻿@using WeatherForecast.Models
+
+@helper TemperatureDuringDay(Temp temp) {
+    Dictionary<string, double> times = new Dictionary<string, double>()
+    {
+        { "Morning", temp.Morn },
+        { "Day", temp.Day },
+        { "Evening", temp.Eve },
+        { "Night", temp.Night }
+    };
+    int i = 0;
+    foreach (var time in times)
+    {
+        i++;
+    <div class="time_of_day col-md-2 @NowHighlightingHelper.NowHighlighting(i)">
+        <div class="time_of_day_title">@time.Key</div>
+        <p class="temperature">@TemperatureHelper.Temperature(time.Value) °C</p>
+    </div>
+}
+}

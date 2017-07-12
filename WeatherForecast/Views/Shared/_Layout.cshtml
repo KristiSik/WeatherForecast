@@ -1,15 +1,5 @@
 ﻿@using WeatherForecast.Models
 
-@model WeatherForecast.Models.Forecast
-@{ 
-    SearchCity searchCity = new SearchCity();
-    if (ViewBag.Search == true)
-    {
-        searchCity.Name = Model.city.name;
-        searchCity.Period = 1;
-    }
-}
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,9 +15,12 @@
         <div class="container-fluid">
             <div class="col-sm-5 col-sm-offset-4">
                 <div class="navbar-header">
-                    @Html.ActionLink("Weza", "Index", null, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Weza", "Index", "Home", null, new { @class = "navbar-brand" })
                 </div>
-                @{ Html.RenderPartial("SearchForm", searchCity); }
+                @{ Html.RenderAction("SearchForm", "Home", new SearchCity() { Name = ViewBag.cityName, Period = 1 }); }
+            </div>
+            <div class="col-sm-3">
+                @{ Html.RenderAction("ProfileInHead", "Profile"); }
             </div>
         </div>
     </nav>
@@ -39,6 +32,7 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/script")
 </body>

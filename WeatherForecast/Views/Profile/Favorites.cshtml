@@ -1,0 +1,33 @@
+﻿@model List<WeatherForecast.Models.Profile.City>
+
+<h2>Favorites</h2>
+<div class="panel panel-default panel-body">
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    @Html.Hidden("Period", 1)
+    <table class="history-table table table-bordered">
+        <thead>
+            <tr>
+                <td>City</td>
+                <td>Action</td>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="history_link">@Html.DisplayFor(modelItem => item.Name)</div>
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditFavorite", new { cityName = item.Name }, new { @class="text-primary" }) 
+                        |
+                        @Html.ActionLink("Delete", "DeleteFavorite", new { cityName = item.Name }, new { @class = "text-danger" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+</div>

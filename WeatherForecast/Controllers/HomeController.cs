@@ -1,8 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Net.Http;
+using System.Linq;
 using System.Web.Mvc;
+using WeatherForecast.Context;
+using WeatherForecast.Json;
 using WeatherForecast.Models;
+using WeatherForecast.Models.Profile;
 using WeatherForecast.Services;
 
 namespace WeatherForecast.Controllers
@@ -14,25 +17,6 @@ namespace WeatherForecast.Controllers
         {
             _logger = logger;
         }
-        private async System.Threading.Tasks.Task<String> getJsonFromUrl(SearchCity city)
-        {
-            var json = "";
-            using (var httpClient = new HttpClient())
-            {
-                try
-                {
-                    _logger.Log(LogLevel.Info, "Getting JSON for " + city.Name + "...");
-                    json = await httpClient.GetStringAsync("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + city.Name + "&cnt=" + city.Period + "&units=metric&APPID=320c4641f279991c76782dd2d146a7b5");
-                    _logger.Log(LogLevel.Success, "Received JSON data for " + city.Name + ".");
-                }
-                catch (Exception e)
-                {
-                    _logger.Log(LogLevel.Error, "Can't get JSON for " + city.Name + ". " + e.Message);
-                    return null;
-                }
-            }
-            return json;
-        }
         [HandleError]
         [HttpGet]
         public ActionResult Index()
@@ -43,31 +27,63 @@ namespace WeatherForecast.Controllers
         public async System.Threading.Tasks.Task<ActionResult> Index(SearchCity searchCity)
         {
             ViewBag.Search = true;
+            JsonOperations jsonGetter = new JsonOperations(_logger);
+            string content = await jsonGetter.GetJsonFromUrl(searchCity);
             Forecast forecast;
-            string content = await getJsonFromUrl(searchCity);
             try
             {
                 _logger.Log(LogLevel.Info, "Deserializing JSON for " + searchCity.Name + "...");
                 forecast = JsonConvert.DeserializeObject<Forecast>(content);
+                forecast.Period = searchCity.Period;
                 _logger.Log(LogLevel.Success, "Deserialized JSON for " + searchCity.Name + ".");
+                if (Session["UserId"] != null && searchCity.Period == 1)
+                {
+                    using (var ctx = new WeatherForecastContext())
+                    {
+                        int userId = (int) Session["UserId"];
+                        var s = ctx.Users.SingleOrDefault(u => u.Id == userId);
+                        s.History.Add(new Request() { CityName = searchCity.Name, Date = DateTime.Now });
+                        ctx.SaveChanges();
+                    }
+                }
             }
             catch (Exception e)
             {
                 _logger.Log(LogLevel.Error, "Can't deserialize JSON. " + e.Message);
-                return View("~/Views/Home/NotFoundCity.cshtml", new Forecast() { city = new City() { name = searchCity.Name }, cnt = 1 });
+                return View("~/Views/Home/NotFoundCity.cshtml", new Forecast() { City = new Models.City() { Name = searchCity.Name }, Cnt = 1 });
             }
-            forecast.Period = searchCity.Period;
+
             return View(forecast);
         }
         public ActionResult SearchForm()
         {
             SearchCity city = new SearchCity();
-            return View(city);
+            return PartialView(city);
         }
         public ActionResult FilterForm()
         {
             SearchCity city = new SearchCity();
-            return View(city);
+            return PartialView(city);
+        }
+        public ActionResult ProfileInHead()
+        {
+            return PartialView();
+        }
+        public ActionResult FavoriteButton(string cityName)
+        {
+            if (Session["UserId"] != null)
+            {
+                using (var ctx = new WeatherForecastContext())
+                {
+                    int userId = (int)Session["UserId"];
+                    var favorites = ctx.Users.Where(u => u.Id == userId).Select(f => f.Favorites).FirstOrDefault();
+                    if (!favorites.Any(f => f.Name == cityName))
+                    {
+                        return PartialView(Tuple.Create(new Models.Profile.City() { Name = cityName }, true));
+                    }
+                }
+            }
+            return PartialView(Tuple.Create(new Models.Profile.City() { Name = cityName }, false));
         }
     }
 }

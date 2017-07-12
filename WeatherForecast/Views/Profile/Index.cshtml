@@ -1,0 +1,10 @@
+﻿@model List<WeatherForecast.Models.Profile.City>
+@{
+    Layout = null;
+}
+
+@foreach(var city in Model)
+{
+    @city.Name <text>/</text> @city.Requests
+    <br />
+}

@@ -1,0 +1,13 @@
+﻿@model Tuple<WeatherForecast.Models.Profile.City, Boolean>
+
+@if (Session["UserId"] != null)
+{
+    if (Model.Item2 == true)
+    {
+        <a class="btn btn-primary" href="@Url.Action("AddFavorite", "Profile", new { cityName = Model.Item1.Name })">Add to Favorites</a>
+    }
+    else
+    {
+        <a class="btn btn-danger" href="@Url.Action("DeleteFavorite", "Profile", new { cityName = Model.Item1.Name })">Delete from Favorites</a>
+    }
+}

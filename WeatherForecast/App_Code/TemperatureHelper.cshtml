@@ -1,0 +1,10 @@
+﻿@helper Temperature(double temp) {
+    if (temp > 0)
+    {
+        @:+@Math.Round(temp)
+    }
+    else
+    {
+        @:-@Math.Round(temp)
+    }
+}

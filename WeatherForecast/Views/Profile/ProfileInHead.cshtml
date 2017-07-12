@@ -1,0 +1,23 @@
+﻿@if (Session["UserId"] != null)
+{
+    <div class="row">
+        <div id="profile" class="col-sm-2">
+            <img src="@VirtualPathUtility.ToAbsolute("~/Images/user_avatar.gif")" id="user_avatar" />
+        </div>
+        <div class="dropdown">
+            <div class="col-sm-3 username dropdown-toggle" type="button" id="profileDropDownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                @Session["UserName"]
+            </div>
+            <ul class="dropdown-menu" id="profileMenu" aria-labelledby="profileDropDownMenu">
+                <li>@Html.ActionLink("Favorites", "Favorites")</li>
+                <li>@Html.ActionLink("History", "History")</li>
+                <li role="separator" class="divider"></li>
+                <li>@Html.ActionLink("Log out", "Logout")</li>
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+    <div class="login_signup"><b>@Html.ActionLink("Log in", "Login")</b> or <b>@Html.ActionLink("Sign up", "Registration", "Profile")</b></div>
+}
