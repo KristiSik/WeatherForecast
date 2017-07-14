@@ -1,8 +1,8 @@
-﻿@model Tuple<WeatherForecast.Models.Profile.City, Boolean>
+﻿@model Tuple<DataLayer.Models.City, Boolean>
 
 @if (Session["UserId"] != null)
 {
-    if (Model.Item2 == true)
+    if (Model.Item2 == false)
     {
         <a class="btn btn-primary" href="@Url.Action("AddFavorite", "Profile", new { cityName = Model.Item1.Name })">Add to Favorites</a>
     }

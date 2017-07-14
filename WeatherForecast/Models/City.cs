@@ -1,5 +1,4 @@
-﻿
-namespace WeatherForecast.Models
+﻿namespace WeatherForecast.Models
 {
     public class City
     {

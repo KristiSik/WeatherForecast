@@ -1,23 +1,23 @@
-﻿using Newtonsoft.Json;
+﻿using DataLayer;
+using DataLayer.Models;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Web.Mvc;
-using WeatherForecast.Context;
 using WeatherForecast.Json;
 using WeatherForecast.Models;
-using WeatherForecast.Models.Profile;
 using WeatherForecast.Services;
 
 namespace WeatherForecast.Controllers
 {
     public class HomeController : Controller
     {
+        private UnitOfWork ctx = new UnitOfWork(new WeatherForecastContext());
         private ILogger _logger;
         public HomeController(ILogger logger)
         {
             _logger = logger;
         }
-        [HandleError]
         [HttpGet]
         public ActionResult Index()
         {
@@ -36,15 +36,11 @@ namespace WeatherForecast.Controllers
                 forecast = JsonConvert.DeserializeObject<Forecast>(content);
                 forecast.Period = searchCity.Period;
                 _logger.Log(LogLevel.Success, "Deserialized JSON for " + searchCity.Name + ".");
-                if (Session["UserId"] != null && searchCity.Period == 1)
+                if (Session["UserId"] != null && searchCity.Period == 1)                
                 {
-                    using (var ctx = new WeatherForecastContext())
-                    {
-                        int userId = (int) Session["UserId"];
-                        var s = ctx.Users.SingleOrDefault(u => u.Id == userId);
-                        s.History.Add(new Request() { CityName = searchCity.Name, Date = DateTime.Now });
-                        ctx.SaveChanges();
-                    }
+                    int userId = (int)Session["UserId"];
+                    ctx.Users.AddRequestFromUser(userId, searchCity.Name);
+                    ctx.Complete();
                 }
             }
             catch (Exception e)
@@ -73,17 +69,11 @@ namespace WeatherForecast.Controllers
         {
             if (Session["UserId"] != null)
             {
-                using (var ctx = new WeatherForecastContext())
-                {
-                    int userId = (int)Session["UserId"];
-                    var favorites = ctx.Users.Where(u => u.Id == userId).Select(f => f.Favorites).FirstOrDefault();
-                    if (!favorites.Any(f => f.Name == cityName))
-                    {
-                        return PartialView(Tuple.Create(new Models.Profile.City() { Name = cityName }, true));
-                    }
-                }
+                int userId = (int)Session["UserId"];
+                bool cityInFavorites = ctx.Users.IsCityInFavorites(userId, cityName);
+                return PartialView(Tuple.Create(new DataLayer.Models.City() { Name = cityName }, cityInFavorites));
             }
-            return PartialView(Tuple.Create(new Models.Profile.City() { Name = cityName }, false));
+            return PartialView(Tuple.Create(new DataLayer.Models.City() { Name = cityName }, false));
         }
     }
 }
