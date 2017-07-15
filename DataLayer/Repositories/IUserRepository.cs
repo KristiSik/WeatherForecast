@@ -9,6 +9,7 @@ namespace DataLayer.Repositories
         User GetUserById(int id);
         User GetUserByLoginPassword(string login, string password);
         void AddUser(User user);
+        void DeleteUser(string login, string password);
         void AddRequestFromUser(int userId, string city);
         City GetFavorite(int userId, string city);
         void AddFavorite(int userId, string city);

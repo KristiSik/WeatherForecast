@@ -9,6 +9,11 @@ namespace DataLayer
         public IUserRepository Users { get; private set; }
         public ICityRepository Cities { get; private set; }
 
+        public UnitOfWork()
+        {
+            _context = new WeatherForecastContext();
+            Users = new UserRepository(_context);
+        }
         public UnitOfWork(WeatherForecastContext context)
         {
             _context = context;

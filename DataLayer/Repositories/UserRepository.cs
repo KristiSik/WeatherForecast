@@ -85,6 +85,12 @@ namespace DataLayer.Repositories
             favorite.Name = newCity;
         }
 
+        public void DeleteUser(string login, string password)
+        {
+            User usr = Db.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
+            Db.Users.Remove(usr);
+        }
+
         public WeatherForecastContext Db
         {
             get { return Context as WeatherForecastContext; }

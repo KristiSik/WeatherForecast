@@ -7,7 +7,15 @@ namespace WeatherForecast.Controllers
 {
     public class ProfileController : Controller
     {
-        UnitOfWork ctx = new UnitOfWork(new WeatherForecastContext());
+        private IUnitOfWork ctx;
+        public ProfileController()
+        {
+            ctx = new UnitOfWork(new WeatherForecastContext());
+        }
+        public ProfileController(UnitOfWork uow)
+        {
+            ctx = uow;
+        }
         public ActionResult Index()
         {
             return View();
@@ -102,6 +110,7 @@ namespace WeatherForecast.Controllers
                 return RedirectToAction("Index", "Home");
             }
             int userId = (int)Session["UserId"];
+            ctx.Users.DeleteFavorite(userId, cityName);
             ctx.Complete();
             return RedirectToAction("Favorites", "Profile");
         }
