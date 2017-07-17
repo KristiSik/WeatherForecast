@@ -2,19 +2,20 @@
 using DataLayer.Models;
 using System.Web.Mvc;
 using WeatherForecast.Models;
+using WeatherForecast.Services;
 
 namespace WeatherForecast.Controllers
 {
     public class ProfileController : Controller
     {
+        private ILogger _logger;
         private IUnitOfWork ctx;
-        public ProfileController()
+        private IUserAccount userAccount; 
+        public ProfileController(ILogger logger, IUnitOfWork uow, IUserAccount user)
         {
-            ctx = new UnitOfWork(new WeatherForecastContext());
-        }
-        public ProfileController(UnitOfWork uow)
-        {
+            _logger = logger;
             ctx = uow;
+            userAccount = user;
         }
         public ActionResult Index()
         {
@@ -32,10 +33,13 @@ namespace WeatherForecast.Controllers
             {
                 ctx.Users.AddUser(user);
                 ctx.Complete();
+                _logger.Log(LogLevel.Success, "User " + user.Login + " registered.");
+                userAccount.Login(new LoginUser() { Login = user.Login, Password = user.Password });
                 return RedirectToAction("Index", "Home");
             }
             else
             {
+                _logger.Log(LogLevel.Error, "Failed to create a new user with login " + user.Login + ".");
                 return View(user);
             }
         }
@@ -47,15 +51,14 @@ namespace WeatherForecast.Controllers
         [HttpPost]
         public ActionResult Login(LoginUser user)
         {
-            User usr = ctx.Users.GetUserByLoginPassword(user.Login, user.Password);
-            if (usr != null)
+            if (userAccount.Login(user))
             {
-                Session["UserId"] = usr.Id;
-                Session["UserName"] = usr.Firstname;
+                _logger.Log(LogLevel.Success, "User " + user.Login + " signed in.");
                 return RedirectToAction("Index", "Home");
             }
             else
             {
+                _logger.Log(LogLevel.Error, "Failed to sign in with login " + user.Login + ".");
                 ViewBag.Error = "Wrong Login or Password";
                 return View(user);
             }
@@ -70,69 +73,65 @@ namespace WeatherForecast.Controllers
         }
         public ActionResult History()
         {
-            if (Session["UserId"] == null)
+            if (!userAccount.IsAutorized())
             {
                 return RedirectToAction("Index", "Home");
             }
-            int userId = (int)Session["UserId"];
-            return View(ctx.Users.GetHistory(userId));
+            return View(ctx.Users.GetHistory(userAccount.GetId()));
         }
         public ActionResult Logout()
         {
-            Session["UserId"] = null;
-            Session["UserName"] = null;
+            _logger.Log(LogLevel.Success, userAccount.GetId() + " logged out.");
+            userAccount.Logout();
             return RedirectToAction("Index", "Home");
         }
         public ActionResult Favorites()
         {
-            if (Session["UserId"] == null)
-            {
+            if (!userAccount.IsAutorized())
+            { 
                 return RedirectToAction("Index", "Home");
             }
-            int userId = (int)Session["UserId"];
-            return View(ctx.Users.GetFavorites(userId));
+            return View(ctx.Users.GetFavorites(userAccount.GetId()));
         }
         public ActionResult AddFavorite(string cityName)
         {
-            if (Session["UserId"] == null)
+            if (!userAccount.IsAutorized())
             {
                 return RedirectToAction("Index", "Home");
             }
-            int userId = (int)Session["UserId"];
-            ctx.Users.AddFavorite(userId, cityName);
-            ctx.Complete();
+            if (ctx.Users.AddFavorite(userAccount.GetId(), cityName))
+            {
+                ctx.Complete();
+            };
             return RedirectToAction("Favorites", "Profile");
         }
         public ActionResult DeleteFavorite(string cityName)
         {
-            if (Session["UserId"] == null)
+            if (!userAccount.IsAutorized())
             {
                 return RedirectToAction("Index", "Home");
             }
-            int userId = (int)Session["UserId"];
-            ctx.Users.DeleteFavorite(userId, cityName);
+            ctx.Users.DeleteFavorite(userAccount.GetId(), cityName);
             ctx.Complete();
             return RedirectToAction("Favorites", "Profile");
         }
         [HttpGet]
         public ActionResult EditFavorite(string cityName)
         {
-            if (Session["UserId"] == null)
+            if (!userAccount.IsAutorized())
             {
                 return RedirectToAction("Index", "Home");
             }
-            int userId = (int)Session["UserId"];
-            return View(ctx.Users.GetFavorite(userId, cityName));
+            return View(ctx.Users.GetFavorite(userAccount.GetId(), cityName));
         }
         [HttpPost]
         public ActionResult EditFavorite(DataLayer.Models.City city)
         {
-            if (Session["UserId"] == null)
+            if (!userAccount.IsAutorized())
             {
                 return RedirectToAction("Index", "Home");
             }
-            int userId = (int)Session["UserId"];
-            ctx.Users.EditFavorite(userId, city.Id, city.Name);
+            ctx.Users.EditFavorite(userAccount.GetId(), city.Id, city.Name);
             ctx.Complete();
             return RedirectToAction("Favorites");
         }

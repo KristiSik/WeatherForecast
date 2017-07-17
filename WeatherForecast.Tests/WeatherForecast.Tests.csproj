@@ -78,12 +78,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fake\IUnitOfWork.cs" />
+    <Compile Include="FakeUnitOfWork.cs" />
+    <Compile Include="HomeControllerTests.cs" />
+    <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="LoggerTests.cs" />
     <Compile Include="ProfileControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Fake\IRepository.cs" />
-    <Compile Include="Fake\FakeRepository.cs" />
-    <Compile Include="Fake\FakeUnitOfWork.cs" />
+    <Compile Include="FakeContext.cs" />
+    <Compile Include="FakeRepository\IRepository.cs" />
+    <Compile Include="FakeRepository\IUserRepository.cs" />
+    <Compile Include="FakeRepository\Repository.cs" />
+    <Compile Include="FakeRepository\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

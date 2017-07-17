@@ -1,25 +1,26 @@
-﻿using DataLayer;
-using DataLayer.Models;
+﻿using DataLayer.Models;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 using System.Data.Entity.Validation;
-using System.Web.Mvc;
 using WeatherForecast.Controllers;
-using WeatherForecast.Tests.Fake;
+using WeatherForecast.Services;
 
 namespace WeatherForecast.Tests
 {
     [TestFixture]
     public class ProfileControllerTests
     {
-        private Mock<UnitOfWork> mock;
-
+        private Mock<ILogger> logger;
+        private Mock<IUserAccount> userAccount;
+        private Mock<DataLayer.IUnitOfWork> uow;
         private ProfileController controller;
-        public ProfileControllerTests()
+        [SetUp]
+        public void Setup()
         {
-            mock = new Mock<UnitOfWork>();
-            controller = new ProfileController(mock.Object);
+            logger = new Mock<ILogger>();
+            userAccount = new Mock<IUserAccount>();
+            uow = new Mock<DataLayer.IUnitOfWork>();
+            controller = new ProfileController(logger.Object, uow.Object, userAccount.Object);
         }
         [Test]
         [TestCase("1")]
@@ -44,17 +45,27 @@ namespace WeatherForecast.Tests
         [Test]
         [TestCase("1", "1")]
         [TestCase("1123", "savasv1")]
-        [TestCase("1dqwdw", "1vsasav")]
+        [TestCase("Login", "password")]
         [TestCase("1asdasd", "")]
         [TestCase("213123123", "")]
         [TestCase("", "")]
         public void Login_When_input_wrong_login_and_password_Then_viewbag_error(string login, string password)
         {
-            controller.Login(new Models.LoginUser() { Login = login, Password = password });
-            string expected = "Wrong Login or Password";
-            Assert.AreEqual(expected, controller.ViewBag.Error);
+            userAccount.Setup(m => m.Login(new Models.LoginUser() { Login = login, Password = password }));
         }
         [Test]
-        public void 
+        public void Registration_When_register_new_account_Then_ILogger_called()
+        {
+            User user = new User()
+            {
+                Firstname = "Michael",
+                Lastname = "Jackson",
+                Login = "1234567",
+                Password = "1234567",
+                ConfirmPassword = "1234567"
+            };
+            controller.Registration(user);
+            logger.Verify(m => m.Log(LogLevel.Error, It.IsAny<string>()), Times.Once);
+        }
     }
 }

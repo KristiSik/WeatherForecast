@@ -12,7 +12,7 @@ namespace DataLayer.Repositories
         void DeleteUser(string login, string password);
         void AddRequestFromUser(int userId, string city);
         City GetFavorite(int userId, string city);
-        void AddFavorite(int userId, string city);
+        bool AddFavorite(int userId, string city);
         void EditFavorite(int userId, int cityId, string newCity);
         void DeleteFavorite(int userId, string city);
         bool IsCityInFavorites(int userId, string city);

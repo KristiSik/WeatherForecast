@@ -14,6 +14,8 @@ namespace WeatherForecast
         {
             IKernel _kernel = new StandardKernel();
             _kernel.Bind<ILogger>().To<CombinedLogger>();
+            _kernel.Bind<IUnitOfWork>().To<UnitOfWork>().WithConstructorArgument("context", new WeatherForecastContext());
+            _kernel.Bind<IUserAccount>().To<UserAccount>();
 
             DependencyResolver.SetResolver(new NinjectDependencyResolver(_kernel));
 

@@ -58,13 +58,15 @@ namespace DataLayer.Repositories
             return Db.Users.Where(u => u.Id == userId).Select(x => x.Favorites).First().OrderByDescending(y => y.Requests).ToList();
         }
 
-        public void AddFavorite(int userId, string city)
+        public bool AddFavorite(int userId, string city)
         {
             User user = Db.Users.Where(u => u.Id == userId).FirstOrDefault();
             if (!user.Favorites.Any(f => f.Name == city))
             {
                 user.Favorites.Add(new City() { Name = city, Requests = 0 });
+                return true;
             }
+            return false;
         }
 
         public void DeleteFavorite(int userId, string city)

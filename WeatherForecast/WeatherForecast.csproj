@@ -46,6 +46,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -150,6 +151,8 @@
     <Compile Include="Services\ConsoleLogger.cs" />
     <Compile Include="Services\FileLogger.cs" />
     <Compile Include="Services\ILogger.cs" />
+    <Compile Include="Services\IUserAccount.cs" />
+    <Compile Include="Services\UserAccount.cs" />
     <Compile Include="Util\NinjectDependencyResolver.cs" />
     <Content Include="App_Code\WindDirectionHelper.cshtml" />
     <Content Include="App_Code\NowHighlightingHelper.cshtml" />

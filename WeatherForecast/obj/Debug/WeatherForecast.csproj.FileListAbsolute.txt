@@ -333,7 +333,6 @@ D:\BSA\Homework 4\WeatherForecast\WeatherForecast\bin\WeatherForecast.dll.config
 D:\BSA\Homework 4\WeatherForecast\WeatherForecast\bin\WeatherForecast.dll
 D:\BSA\Homework 4\WeatherForecast\WeatherForecast\bin\WeatherForecast.pdb
 D:\BSA\Homework 4\WeatherForecast\WeatherForecast\bin\Antlr3.Runtime.dll
-D:\BSA\Homework 4\WeatherForecast\WeatherForecast\bin\EntityFramework.dll
 D:\BSA\Homework 4\WeatherForecast\WeatherForecast\bin\Microsoft.AI.Agent.Intercept.dll
 D:\BSA\Homework 4\WeatherForecast\WeatherForecast\bin\Microsoft.AI.DependencyCollector.dll
 D:\BSA\Homework 4\WeatherForecast\WeatherForecast\bin\Microsoft.AI.PerfCounterCollector.dll
