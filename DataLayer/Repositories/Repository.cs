@@ -25,10 +25,6 @@ namespace DataLayer.Repositories
         {
             return Context.Set<TEntity>().Find(id);
         }
-        public IEnumerable<TEntity> GetAll()
-        {
-            return Context.Set<TEntity>().ToList();
-        }
         public void Remove(TEntity entity)
         {
             Context.Set<TEntity>().Remove(entity);

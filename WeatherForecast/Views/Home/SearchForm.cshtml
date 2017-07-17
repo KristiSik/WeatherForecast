@@ -1,21 +1,13 @@
 ﻿@model WeatherForecast.Models.SearchCity
-@helper DropDownListCities(IEnumerable<SelectListItem> cities) 
-{
-    foreach (var city in cities)
-    {
-        <li>
-            <a>@city.Text</a>
-        </li>
-    }
-}
+
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "navbar-form navbar-left" }))
     {
         <div class="form-group">
             <div class="dropdown" id="drop_menu">
-                @Html.TextBoxFor(Model => Model.Name, new { @class="form-control", @placeholder="Your city...", @data_toggle="dropdown", @aria_haspopup="true", @aria_expanded="true" })
+                @Html.TextBoxFor(Model => Model.Name, new { @class = "form-control", @placeholder = "Your city...", @data_toggle = "dropdown", @aria_haspopup = "true", @aria_expanded = "true" })
                 <ul class="dropdown-menu" aria-labelledby="Search">
-                    @DropDownListCities(new SelectList( new string[] { "Kiev", "Lviv", "Kharkiv", "Dnipropetrovsk", "Odessa" }))
+                    @{ Html.RenderAction("DropDownListCities", "Home"); }
                 </ul>
             </div>
         </div>

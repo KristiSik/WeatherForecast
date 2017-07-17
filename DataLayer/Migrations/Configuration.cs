@@ -1,6 +1,8 @@
 namespace DataLayer.Migrations
 {
+    using DataLayer.Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -14,18 +16,35 @@ namespace DataLayer.Migrations
 
         protected override void Seed(DataLayer.WeatherForecastContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            List<DefaultCity> defaultCities = new List<DefaultCity>()
+            {
+                new DefaultCity(){
+                    Id = 1,
+                    Name = "Kiev"
+                },
+                new DefaultCity()
+                {
+                    Id = 2,
+                    Name = "Lviv"
+                },
+                new DefaultCity(){
+                    Id = 3,
+                    Name = "Kharkiv"
+                },
+                new DefaultCity()
+                {
+                    Id = 4,
+                    Name = "Dnipropetrovsk"
+                },
+                new DefaultCity(){
+                    Id = 5,
+                    Name = "Odessa"
+                }
+            };
+            foreach (var city in defaultCities)
+            {
+                context.DefaultCities.AddOrUpdate(city);
+            }
         }
     }
 }

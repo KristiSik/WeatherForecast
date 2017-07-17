@@ -5,6 +5,7 @@ using System.Web.Routing;
 using WeatherForecast.Services;
 using WeatherForecast.Util;
 using DataLayer;
+using System.Web.Http;
 
 namespace WeatherForecast
 {
@@ -20,6 +21,7 @@ namespace WeatherForecast
             DependencyResolver.SetResolver(new NinjectDependencyResolver(_kernel));
 
             AreaRegistration.RegisterAllAreas();
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

@@ -75,5 +75,10 @@ namespace WeatherForecast.Controllers
             }
             return PartialView(Tuple.Create(new DataLayer.Models.City() { Name = cityName }, false));
         }
+        public ActionResult DropDownListCities()
+        {
+            var defaultCities = ctx.DefaultCities.GetAllCities();
+            return PartialView(defaultCities);
+        }
     }
 }

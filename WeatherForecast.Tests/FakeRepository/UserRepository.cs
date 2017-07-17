@@ -55,7 +55,7 @@ namespace WeatherForecast.Tests.FakeRepository
 
         public IEnumerable<City> GetFavorites(int userId)
         {
-            return Db.Users.Where(u => u.Id == userId).Select(x => x.Favorites).First().OrderByDescending(y => y.Requests).ToList();
+            return Db.Users.Where(u => u.Id == userId).Select(x => x.Favorites).First().ToList();
         }
 
         public void AddFavorite(int userId, string city)
@@ -63,7 +63,7 @@ namespace WeatherForecast.Tests.FakeRepository
             User user = Db.Users.Where(u => u.Id == userId).FirstOrDefault();
             if (!user.Favorites.Any(f => f.Name == city))
             {
-                user.Favorites.Add(new City() { Name = city, Requests = 0 });
+                user.Favorites.Add(new City() { Name = city });
             }
         }
 

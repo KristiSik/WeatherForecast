@@ -13,12 +13,20 @@ namespace DataLayer.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false),
-                        Requests = c.Int(nullable: false),
                         User_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Users", t => t.User_Id)
                 .Index(t => t.User_Id);
+            
+            CreateTable(
+                "dbo.DefaultCities",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Requests",
@@ -57,6 +65,7 @@ namespace DataLayer.Migrations
             DropIndex("dbo.Cities", new[] { "User_Id" });
             DropTable("dbo.Users");
             DropTable("dbo.Requests");
+            DropTable("dbo.DefaultCities");
             DropTable("dbo.Cities");
         }
     }

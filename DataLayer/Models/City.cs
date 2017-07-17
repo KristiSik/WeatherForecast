@@ -8,7 +8,5 @@ namespace DataLayer.Models
 
         [Required]
         public string Name { get; set; }
-
-        public int Requests { get; set; }
     }
 }

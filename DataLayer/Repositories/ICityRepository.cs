@@ -6,6 +6,8 @@ namespace DataLayer.Repositories
 {
     public interface ICityRepository : IRepository<City>
     {
-        void AddCity(City city);
+        IEnumerable<DefaultCity> GetAllCities();
+        void AddCity(DefaultCity city);
+        bool RemoveCity(DefaultCity city);
     }
 }
