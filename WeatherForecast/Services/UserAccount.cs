@@ -2,27 +2,37 @@
 using DataLayer.Models;
 using System.Web;
 using WeatherForecast.Models;
+using System;
 
 namespace WeatherForecast.Services
 {
     public class UserAccount : IUserAccount
     {
-        private UnitOfWork ctx = new UnitOfWork(new WeatherForecastContext());
-
-        public int GetId()
+        private IUnitOfWork ctx;
+        public UserAccount(IUnitOfWork uow)
         {
-            return (int)HttpContext.Current.Session["UserId"];
+            ctx = uow;
         }
-        public bool IsAutorized()
-        {
-            if (HttpContext.Current.Session["UserId"] != null) {
-                int id = (int)HttpContext.Current.Session["UserId"];
-                if (id > 0)
+        public bool IsAutorized {
+            get
+            {
+                if (HttpContext.Current.Session["UserId"] != null)
                 {
-                    return true;
+                    int id = (int)HttpContext.Current.Session["UserId"];
+                    if (id > 0)
+                    {
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
+        }
+        public int Id
+        {
+            get
+            {
+                return (int)HttpContext.Current.Session["UserId"];
+            }
         }
 
         public bool Login(LoginUser user)
@@ -44,6 +54,15 @@ namespace WeatherForecast.Services
         {
             HttpContext.Current.Session["UserId"] = null;
             HttpContext.Current.Session["UserName"] = null;
+        }
+
+        public void Request(SearchCity searchCity)
+        {
+            if (IsAutorized && searchCity.Period == 1)
+            {
+                ctx.Users.AddRequestFromUser(Id, searchCity.Name);
+                ctx.Complete();
+            }
         }
     }
 }

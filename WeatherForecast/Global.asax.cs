@@ -13,13 +13,6 @@ namespace WeatherForecast
     {
         protected void Application_Start()
         {
-            IKernel _kernel = new StandardKernel();
-            _kernel.Bind<ILogger>().To<CombinedLogger>();
-            _kernel.Bind<IUnitOfWork>().To<UnitOfWork>().WithConstructorArgument("context", new WeatherForecastContext());
-            _kernel.Bind<IUserAccount>().To<UserAccount>();
-
-            DependencyResolver.SetResolver(new NinjectDependencyResolver(_kernel));
-
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

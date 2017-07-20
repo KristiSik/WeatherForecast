@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Web.Configuration;
 using WeatherForecast.Models;
@@ -6,14 +7,14 @@ using WeatherForecast.Services;
 
 namespace WeatherForecast.Json
 {
-    public class JsonOperations
+    public class ForecastService : IForecastService
     {
         private ILogger _logger;
-        public JsonOperations(ILogger logger)
+        public ForecastService(ILogger logger)
         {
             _logger = logger;
         }
-        public async System.Threading.Tasks.Task<String> GetJsonFromUrl(SearchCity city)
+        public async System.Threading.Tasks.Task<Forecast> GetJsonFromUrl(SearchCity city)
         {
             var json = "";
             using (var httpClient = new HttpClient())
@@ -33,7 +34,18 @@ namespace WeatherForecast.Json
                     return null;
                 }
             }
-            return json;
+            Forecast forecast;
+            try
+            {
+                _logger.Log(LogLevel.Info, "Deserializing JSON for " + city.Name + "...");
+                forecast = JsonConvert.DeserializeObject<Forecast>(json);
+            } 
+            catch(Exception e)
+            {
+                _logger.Log(LogLevel.Error, "Can't deserialize JSON. " + e.Message);
+                forecast = null;
+            }
+            return forecast;
         }
     }
 }

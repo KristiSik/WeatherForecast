@@ -73,33 +73,33 @@ namespace WeatherForecast.Controllers
         }
         public ActionResult History()
         {
-            if (!userAccount.IsAutorized())
+            if (!userAccount.IsAutorized)
             {
                 return RedirectToAction("Index", "Home");
             }
-            return View(ctx.Users.GetHistory(userAccount.GetId()));
+            return View(ctx.Users.GetHistory(userAccount.Id));
         }
         public ActionResult Logout()
         {
-            _logger.Log(LogLevel.Success, userAccount.GetId() + " logged out.");
+            _logger.Log(LogLevel.Success, userAccount.Id + " logged out.");
             userAccount.Logout();
             return RedirectToAction("Index", "Home");
         }
         public ActionResult Favorites()
         {
-            if (!userAccount.IsAutorized())
+            if (!userAccount.IsAutorized)
             { 
                 return RedirectToAction("Index", "Home");
             }
-            return View(ctx.Users.GetFavorites(userAccount.GetId()));
+            return View(ctx.Users.GetFavorites(userAccount.Id));
         }
         public ActionResult AddFavorite(string cityName)
         {
-            if (!userAccount.IsAutorized())
+            if (!userAccount.IsAutorized)
             {
                 return RedirectToAction("Index", "Home");
             }
-            if (ctx.Users.AddFavorite(userAccount.GetId(), cityName))
+            if (ctx.Users.AddFavorite(userAccount.Id, cityName))
             {
                 ctx.Complete();
             };
@@ -107,31 +107,31 @@ namespace WeatherForecast.Controllers
         }
         public ActionResult DeleteFavorite(string cityName)
         {
-            if (!userAccount.IsAutorized())
+            if (!userAccount.IsAutorized)
             {
                 return RedirectToAction("Index", "Home");
             }
-            ctx.Users.DeleteFavorite(userAccount.GetId(), cityName);
+            ctx.Users.DeleteFavorite(userAccount.Id, cityName);
             ctx.Complete();
             return RedirectToAction("Favorites", "Profile");
         }
         [HttpGet]
         public ActionResult EditFavorite(string cityName)
         {
-            if (!userAccount.IsAutorized())
+            if (!userAccount.IsAutorized)
             {
                 return RedirectToAction("Index", "Home");
             }
-            return View(ctx.Users.GetFavorite(userAccount.GetId(), cityName));
+            return View(ctx.Users.GetFavorite(userAccount.Id, cityName));
         }
         [HttpPost]
         public ActionResult EditFavorite(DataLayer.Models.City city)
         {
-            if (!userAccount.IsAutorized())
+            if (!userAccount.IsAutorized)
             {
                 return RedirectToAction("Index", "Home");
             }
-            ctx.Users.EditFavorite(userAccount.GetId(), city.Id, city.Name);
+            ctx.Users.EditFavorite(userAccount.Id, city.Id, city.Name);
             ctx.Complete();
             return RedirectToAction("Favorites");
         }

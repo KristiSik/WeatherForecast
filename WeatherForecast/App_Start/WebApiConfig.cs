@@ -10,14 +10,9 @@ namespace WeatherForecast
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{action}"
-            );
-
-            config.Routes.MapHttpRoute(
                 name: "GetWeatherForCity",
                 routeTemplate: "api/{controller}/{action}/{name}/{period}",
-                defaults: new { period = RouteParameter.Optional }
+                defaults: new { name = RouteParameter.Optional, period = RouteParameter.Optional }
             );
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));

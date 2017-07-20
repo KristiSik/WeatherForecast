@@ -11,10 +11,12 @@ namespace WeatherForecast.ApiControllers
     {
         private IUnitOfWork ctx;
         private ILogger logger;
-        public ForecastController()
+        private IForecastService forecastService;
+        public ForecastController(ILogger _logger, IUnitOfWork uow, IForecastService jsonOperations)
         {
-            logger = new ConsoleLogger();
-            ctx = new UnitOfWork(new WeatherForecastContext());
+            logger = _logger;
+            ctx = uow;
+            forecastService = jsonOperations;
         }
         [HttpGet]
         public async System.Threading.Tasks.Task<IHttpActionResult> Get([FromUri] SearchCity request)
@@ -23,9 +25,7 @@ namespace WeatherForecast.ApiControllers
             {
                 request.Period = 17;
             }
-            JsonOperations getJson = new JsonOperations(logger);
-            string json = await getJson.GetJsonFromUrl(request);
-            Forecast forecast = JsonConvert.DeserializeObject<Forecast>(json);
+            Forecast forecast = await forecastService.GetJsonFromUrl(request);
             return Json(forecast);
         }
     }

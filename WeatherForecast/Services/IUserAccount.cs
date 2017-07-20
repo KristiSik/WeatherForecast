@@ -8,9 +8,10 @@ namespace WeatherForecast.Services
 {
     public interface IUserAccount
     {
+        bool IsAutorized { get; }
+        int Id { get; }
         bool Login(LoginUser user);
-        bool IsAutorized();
         void Logout();
-        int GetId();
+        void Request(SearchCity searchCity);
     }
 }

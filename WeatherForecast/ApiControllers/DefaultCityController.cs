@@ -9,10 +9,10 @@ namespace WeatherForecast.ApiControllers
     {
         private IUnitOfWork ctx;
         private ILogger logger;
-        public DefaultCityController()
+        public DefaultCityController(ILogger _logger, IUnitOfWork uow)
         {
-            logger = new CombinedLogger();
-            ctx = new UnitOfWork(new WeatherForecastContext());
+            logger = _logger;
+            ctx = uow;
         }
         [HttpGet]
         public IHttpActionResult Get()
