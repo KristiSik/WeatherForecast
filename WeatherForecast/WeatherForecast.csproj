@@ -175,8 +175,8 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
-    <Compile Include="Json\IJsonOperations.cs" />
-    <Compile Include="Json\JsonOperations.cs" />
+    <Compile Include="Services\ForecastService.cs" />
+    <Compile Include="Services\IForecastService.cs" />
     <Compile Include="Models\LoginUser.cs" />
     <Compile Include="Models\Main.cs" />
     <Compile Include="Services\CombinedLogger.cs" />

@@ -12,7 +12,7 @@
     foreach (var time in times)
     {
         i++;
-    <div class="time_of_day col-md-2 @NowHighlightingHelper.NowHighlighting(i)">
+    <div class="time_of_day @NowHighlightingHelper.NowHighlighting(i)">
         <div class="time_of_day_title">@time.Key</div>
         <p class="temperature">@TemperatureHelper.Temperature(time.Value) °C</p>
     </div>

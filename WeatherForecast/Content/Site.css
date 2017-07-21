@@ -9,10 +9,18 @@ h3 {
     font-weight: bold;
 }
 
+footer {
+    margin-top: 45px;
+    font-size: 15px;
+    font-family: Segoe UI Light;
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     width: 86%;
-    margin: 0 auto;
+    margin: 0 7%;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -23,13 +31,15 @@ h3 {
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
+input,
 select,
 textarea {
     max-width: 280px;
 }
 
-p:last-child {
-    text-align: center;
+.content {
+    margin: 0 auto;
+    width: 90%;
 }
 
 .period {
@@ -37,12 +47,10 @@ p:last-child {
 }
 
 .day {
+    display: flex;
+    position: relative;
     margin: 15px;
     height: 116px;
-}
-
-.day .col-md-2 {
-    padding: 0;
 }
 
 /* Show title just for first day */
@@ -51,7 +59,11 @@ p:last-child {
     display: block;
 }
 
-.day ~ .day .col-md-2 {
+.day ~ .day .time_of_day {
+    padding: 0;
+    padding-top: 12px;
+}
+.day ~ .day .time_of_day {
     padding: 0;
     padding-top: 12px;
 }
@@ -62,14 +74,15 @@ p:last-child {
 
 /* --end-- */
 
-/* Show date */
 
 .main {
+    width: 15%;
     border-right: 1px solid #dddddd;
     padding: 5px;
     height: 100%;
-    background-color: #f3f3f3;
 }
+
+/* Show date */
 
 .main p {
     text-align: center;
@@ -84,26 +97,30 @@ p:last-child {
 /* Show general information */
 
 .day_info {
+    display: inline-flex;
+    justify-content: center;
+    width: 29%;
     border-right: 1px solid #dddddd;
     height: 100%;
-    background-color: #f9f9f9;
 }
 
 .temperature_min_max {
+    text-align: center;
     font-size: 12px;
-    margin-left: 2px;
+    margin-top: 6px;
 }
 
-.day_info .col-sm-7 {
-    padding: 2px 0 0 15px;
+.info_list {
+    padding: 2px 0 0 25px;
 }
 
-.day_info .col-sm-5 {
+.weather_image {
     padding: 0;
+    padding-right: 15px;
 }
 
-.day_info > .col-sm-5 img {
-    margin: 10px 0px 2px 3px;
+.weather_image img {
+    margin: 10px 0px 7px 13px;
     height: 55%;
 }
 
@@ -123,6 +140,11 @@ p:last-child {
 .wind_direction_img {
     margin-left: -5px;
     height: 28px;
+}
+
+.sun_img {
+    margin-left: -7px;
+    height: 32px;
 }
 
 .table_info {
@@ -149,6 +171,7 @@ p:last-child {
 /* Temperature in each time of day */
 
 .time_of_day {
+    width: 16%;
     height: 100%;
     border-right: 1px solid #dddddd;
 }
@@ -165,6 +188,13 @@ p:last-child {
     font-family: "Segoe UI Light";
     text-align: center;
     font-size: 30px;
+    margin-bottom: 3px;
+}
+
+.temp_now {
+    font-family: "Segoe UI Light";
+    font-size: 15px;
+    font-weight: bold;
 }
 
 .time_of_day:last-child {
@@ -175,16 +205,8 @@ p:last-child {
     background-color: #ededed;
 }
 
-.now .temperature {
-    font-weight: bold;
-}
-
-.day ~ .day .now {
-    background-color: #ffffff;
-}
-
-.day ~ .day .now .temperature {
-    font-weight: normal;
+.day ~ .day .now{
+    background-color: white;
 }
 
 /* --end-- */
@@ -206,16 +228,11 @@ p:last-child {
     cursor: pointer;
 }
 
-.welcome {
-    font-family: 'Segoe UI Light';
-    font-weight: normal;
-    text-align: center;
-}
-
 /* Profile styles */
 
 #profile {
     padding: 6px;
+    padding-right: 10px;
 }
 
 #user_avatar {
@@ -226,7 +243,7 @@ p:last-child {
 .username {
     font-family: "Segoe UI Light";
     font-size: 16px;
-    width: 180px;
+    width: 100px;
     overflow: hidden;
     white-space: nowrap;
     padding-top: 13px;
@@ -234,23 +251,26 @@ p:last-child {
 }
 
 #profileMenu {
-    margin-top: 51px;
+    margin-top: 1px;
+    margin-left: -90px;
 }
 
 .login_signup {
     font-family: "Segoe UI Light";
     font-size: 16px;
     padding-top: 13px;
+    padding-left: 15px;
+    padding-right: 30px;
     color: black;
 }
 
-    .login_signup a:visited, a {
-        color: #428bca;
-    }
+.login_signup a:visited, a {
+    color: #428bca;
+}
 
-    .login_signup a:hover {
-        text-decoration: none;
-    }
+.login_signup a:hover {
+    text-decoration: none;
+}
 
 /* --end-- */
 
@@ -262,9 +282,9 @@ p:last-child {
     text-align: center;
 }
 
-    .history-table thead {
-        font-weight: bold;
-    }
+.history-table thead {
+    font-weight: bold;
+}
 
 .favorite-table {
     text-align: center;
@@ -276,9 +296,109 @@ p:last-child {
     font-weight: bold;
 }
 
-.history_link:hover {
+/* --end-- */
+
+
+/**/
+
+#container_nav {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    padding-left: 50px;
+}
+
+#menu {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+}
+
+#logo img {
+    margin-top: 6px;
+    width: 68px;
+    height: 35px;
+}
+
+#searchform {
+    display: flex;
+    justify-content: center;
+}
+
+#header_and_filter {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 0 15px;
+}
+
+.company_info {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.contacts {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.contacts b {
+   font-size: 18px;
+   line-height: 25px;
+}
+
+.contacts p {
+    padding: 0 45px;
+}
+
+
+.company_info b {
+    font-size: 18px;
+    line-height: 25px;
+}
+
+.company_info p {
+    padding: 0 45px;
+}
+
+.welcome {
+    width: 100%;
+    text-align: center;
+}
+
+.friday:before {
+    font-size: 12px;
+    display: flex;
+    align-content: center;
+    color: white;
+    padding: 5px;
+    content: "Woohoo!";
+    border-bottom-left-radius: 4px;
+    font-weight: bold;
+    background: #007dd1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.monday:after {
+    font-size: 12px;
+    display: flex;
+    align-content: center;
+    color: white;
+    padding: 5px;
+    content: "F*ckin' Monday :(";
+    border-bottom-right-radius: 4px;
+    font-weight: bold;
+    background: #007dd1;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+.history_link {
     color: #428bca;
     cursor: pointer;
 }
-
-/* --end-- */

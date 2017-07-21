@@ -11,23 +11,74 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-default" style="border-radius:0;">
-        <div class="container-fluid">
-            <div class="col-sm-5 col-sm-offset-4">
+    <nav class="navbar navbar-default" style="border-radius: 0;">
+        <div id="container_nav">
+            <div id="logo">
+                <a href="@Url.Action("Index", "Home")" class="navbar-left"><img src="@VirtualPathUtility.ToAbsolute("~/Images/logo.png")"></a>
                 <div class="navbar-header">
                     @Html.ActionLink("Weza", "Index", "Home", null, new { @class = "navbar-brand" })
                 </div>
-                @{ Html.RenderAction("SearchForm", "Home", new SearchCity() { Name = ViewBag.cityName, Period = 1 }); }
             </div>
-            <div class="col-sm-3">
+            @{ Html.RenderAction("SearchForm", "Home", new SearchCity() { Name = ViewBag.cityName, Period = 1 }); }
+            <div id="menu">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li><a href="https://github.com/KristiSik/WeatherForecast">API</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
                 @{ Html.RenderAction("ProfileInHead", "Profile"); }
             </div>
         </div>
     </nav>
-    <div class="container body-content">
+    <div class="content">
         @RenderBody()
         <footer>
-            <p>&copy; Binary Studio Academy 2017</p>
+            <div class="company_info">
+                <p>
+                    <b>Info</b>
+                    <br />
+                    Project 53 Ltd
+                    <br />
+                    Company No: 2335031
+                    <br />
+                    VAT Number: 103 883 031
+                </p>
+                <p>
+                    <b>Copyright</b>
+                    <br />
+                    All rights reserved.
+                    <br />
+                    © 2017 Project 53 Ltd
+                    <br />
+                    Terms and Conditions
+                    <br />
+                    Privacy Policy
+                </p>
+            </div>
+            <div class="contacts">
+                <p>
+                    <b>Our office</b>
+                    <br />
+                    Ivan Franko st., 53,
+                    <br />
+                    Vinogradiv, Zakarpatska Oblast,
+                    <br />
+                    Ukraine
+                    <br />
+                    <a href="https://www.google.com.ua/maps/&#064;48.1453151,23.0221345,17z?hl=ru" target="_blank">Google Map</a>
+                </p>
+                <p>
+                    <b>Contact us</b>
+                    <br />
+                    t: +38 (050) 123-12-31
+                    <br />
+                    fb: <a href="http://facebook.com">fb.com/weza</a>
+                    <br />
+                    e: info@weza.com
+                </p>
+            </div>
         </footer>
     </div>
 

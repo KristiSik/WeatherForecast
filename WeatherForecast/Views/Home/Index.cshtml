@@ -4,8 +4,8 @@
 @if (ViewBag.Search == true)
 {
     Html.RenderAction("FavoriteButton", "Home", new { cityName = Model.City.Name });
-    <div class="row">
-        <h3 class="col-sm-5">Weather in @Html.DisplayFor(Model => Model.City.Name)</h3>
+    <div id="header_and_filter">
+        <h3>Weather in @Html.DisplayFor(Model => Model.City.Name)</h3>
         @Html.Partial("FilterForm")
     </div>
     foreach (var day in Model.List)

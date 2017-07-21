@@ -2,20 +2,20 @@
 
 @helper Day(WeatherForecast.Models.List day)
 {
-    DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-    date = date.AddSeconds(day.Dt).ToLocalTime();
-    <div class="row day panel panel-default">
-        <div class="main col-md-1">
+DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+date = date.AddSeconds(day.Dt).ToLocalTime();
+    <div class="day panel panel-default @{ if (date.DayOfWeek == DayOfWeek.Friday) {<text>friday</text>} else if (date.DayOfWeek == DayOfWeek.Monday) {<text>monday</text>} }">
+        <div class="main">
             <p class="day_of_week">@date.DayOfWeek</p>
             <p class="day_of_month">@date.Day</p>
             <p class="month">@date.ToString("MMMM", new CultureInfo("en-US"))</p>
         </div>
-        <div class="day_info col-md-3">
-            <div class="col-sm-5">
+        <div class="day_info">
+            <div class="weather_image">
                 <img src="@VirtualPathUtility.ToAbsolute("~/Images/Icons/" + day.Weather.First().Icon + ".png")" />
                 <div class="temperature_min_max">@TemperatureHelper.Temperature(day.Temp.Min) °C ~ @TemperatureHelper.Temperature(day.Temp.Max) °C</div>
             </div>
-            <div class="col-sm-7">
+            <div class="info_list">
                 <table class="table_info">
                     <tr>
                         <td style="width: 20px;"><img class="pressure_img" src="@VirtualPathUtility.ToAbsolute("~/Images/pressure.png")" /></td>
